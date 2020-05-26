@@ -1,0 +1,52 @@
+body {
+    margin: 0;
+    padding-left: 30px;
+    padding-top: 20px;
+    position: relative;
+}
+
+.conteneur {
+    max-width: 1500px;
+    margin:auto;
+}
+
+.part {
+    min-height: 200px
+}
+
+#riviere {
+    border-left: solid black 3px;
+    border-right: solid black 3px;
+}
+
+#img-arrow {
+    max-width: 100%;
+    height: 130px;
+    z-index: 1;
+    top: 9px;
+    position: absolute;
+    transform: rotate(180deg);
+}
+
+#content-river {
+    z-index: 3;
+}
+
+.passager {
+    width: 50px;
+    height: 50px;
+    font-size: 30px;
+    text-align: center;
+    background-color: rgb(220, 220, 220);
+    box-shadow: black 3px 5px 4px -1px;
+    border-radius: 50%;
+    margin: auto;
+}
+
+.clickable:hover{
+    cursor: pointer;
+}
+
+.card-header {
+    background-color: #c5c5c57a !important;
+}

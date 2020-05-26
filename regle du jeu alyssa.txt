@@ -1,0 +1,21 @@
+chaque traversee tout le monde descend du bateau et on fait remonter une personne après pour ramener le bateau
+
+- pouvoir annuler un coup
+- pouvoir revenir au début
+- liste de joueur p1 p2 ...
+- si coup interdit laisse le choix entre revenir au début ou annuler le coup
+
+
+coup 0
+15s
+coup 1: 3 missionaires 1 cannibale berge gauche, 2 cannibales berge droite
+20s
+coup 2: 3 missionnaires 2 cannibales berge gauche, 1 cannibale berge droite
+15s
+annulation coup précédent: 3 missionaires 1 cannibale berge gauche, 2 cannibales berge droite
+10s
+coup 3: 3 missionnaires 3 cannibales berge gauche
+
+- faire fichier csv pour les données
+- mettre une fleche plus grosse et les m et c dans la fleche
+- mettre les m et c sur la meme ligne sur la riviere
