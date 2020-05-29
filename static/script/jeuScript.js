@@ -16,30 +16,26 @@ let ttElement = {
 
 let state, ttState, timerBegin, intervalGame, right, valid, win, idUser, lastTime, currentTime;
 
-let urlBackend = 'http://localhost/';
-/* let urlBackend = 'http://34.78.14.249/'; */
-
 function init() {
     initVariable();
-    $.post(urlBackend + 'api/v1/users', {}, (data) => {
-        if (data.idUser) {
-            idUser = data.idUser;
-            timerElem.innerHTML = '<strong>00:00</strong>';
-            timerBegin = moment(new Date());
-            lastTime = timerBegin;
-            intervalGame = setInterval(() => {
-                currentTime = moment(new Date());
-                let timeString = getTimeString(currentTime, timerBegin);
-                timerElem.innerHTML = '<strong>' + timeString + '</strong>';
-                if (timeString[0] == 3) { //si 30 minute mais en moche
-                    endGame(true);
-                }
-            }, 1000);
-            displayeState();
-        } else {
-            console.log(data);
-        }
-    });
+
+    if (data.idUser) {
+        idUser = data.idUser;
+        timerElem.innerHTML = '<strong>00:00</strong>';
+        timerBegin = moment(new Date());
+        lastTime = timerBegin;
+        intervalGame = setInterval(() => {
+            currentTime = moment(new Date());
+            let timeString = getTimeString(currentTime, timerBegin);
+            timerElem.innerHTML = '<strong>' + timeString + '</strong>';
+            if (timeString[0] == 3) { //si 30 minute mais en moche
+                endGame(true);
+            }
+        }, 1000);
+        displayeState();
+    } else {
+        console.log(data);
+    }
 }
 
 function getTimeString(time, timeToSoustract) {

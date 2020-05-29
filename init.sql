@@ -150,7 +150,16 @@ ALTER SEQUENCE public.coup_id_seq OWNED BY public.coup.id;
 
 CREATE TABLE public.users (
     id integer NOT NULL,
-    name text
+    name text,
+    age integer,
+    genre text,
+    proffession text,
+    niv_etude text,
+    frequence text,
+    joueur_pro text,
+    structure text,
+    jeux text,
+    materiel text
 );
 
 

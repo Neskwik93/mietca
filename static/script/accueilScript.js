@@ -30,6 +30,7 @@ function suivant() {
             state = 2;
             break;
         case 2:
+            let valid = true;
             userInfo.age = inputAge.value;
             userInfo.genre = getRadioValue('genreRadio');
             userInfo.proffession = inputProffession.value;
@@ -40,8 +41,23 @@ function suivant() {
             userInfo.structure = inputWhichStruct.value;
             userInfo.jeux = textAreaWhichGames.value;
             userInfo.materiel = textAreaMatos.value;
-            console.log(userInfo)
-            txtAccueil1.innerHTML = `<p class="mb-3 accueil" style="font-size: 20px;">
+            if (!userInfo.age || !userInfo.proffession || !userInfo.jeux || !userInfo.materiel) {
+                valid = false;
+            }
+            if (userInfo.joueurPro === 'Oui' && (!userInfo.jeuPro || !userInfo.structure)) {
+                valid = false;
+            }
+            if (userInfo.joueurPro === 'Non') {
+                userInfo.jeuPro = null;
+                userInfo.structure = null;
+            }
+            if (valid) {
+                txtAccueil1.style.display = 'block';
+                questionnaire.style.display = 'none';
+                $.post(urlBackend + 'api/v1/users', userInfo, (data) => {
+                    console.log(data);
+                });
+                txtAccueil1.innerHTML = `<p class="mb-3 accueil" style="font-size: 20px;">
         <strong>
             Vous avez 30 minutes pour résoudre ce problème.<br>
             Dès que vous cliquerez sur "commencer" le chronomètre débutera.<br>
@@ -73,6 +89,7 @@ function suivant() {
     <div class="accueil">
         <button class="btn btn-success" onclick="start()">Commencer</button>
     </div>`;
+            }
             break;
     }
 }
