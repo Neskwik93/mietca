@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Missionnaires et Cannibales</title>
+    <link rel="stylesheet" href="./assets/css/styles.css">
+    <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
+    <script src="./script/jQuery.js"></script>
+</head>
+
+<body>
+    <div id="erreur-elem" class="alert alert-danger text-center" style="display: none;">
+        Vous avez fait une erreur, les cannibales etaient trop nombreux sur une des deux rives.<br>
+        Vous pouvez revenir à l'état initial ou annuler votre dernier coup.
+    </div>
+    <div id="victory-elem" class="alert alert-success text-center" style="display: none;">
+        Vous avez réussi en <span id="timer-end-elem"></span>, <stron>bravo !</stron>
+    </div>
+    <div class="row" id="plateau">
+        <div class="col-md-7">
+            <div class="card">
+                <div class="card-header d-flex justify-content-around">
+                    <h4>Rive gauche</h4>
+                    <h4>Rivière</h4>
+                    <h4>Rive droite</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col rive">
+                            <div class="part" id="riveGauche">
+                                <div id="rgWait" class="row mt-5">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="riviere" class="col">
+                            <div class="part">
+                                <div class="row mt-5" style="min-height: 150px;">
+                                    <div class="col" id="content-river">
+                                        <div id="rgInBoat" class="row">
+                                        </div>
+                                        <div id="rdInBoat" class="row">
+                                        </div>
+                                    </div>
+                                    <img id="img-arrow" src="./assets/img/arrow.png">
+                                </div>
+                                <div class="row" id="btn-bascule-cont" style="display: none;">
+                                    <div class="col text-center">
+                                        <button class="btn btn-success" onclick="bascule()">Traverser</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col rive">
+                            <div id="riveDroite" class="part">
+                                <div id="rdWait" class="row mt-5"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="text-center">Actions</h4>
+                </div>
+                <div class="card-body text-center">
+                    <div class="mb-3" style="font-size: 30px" id="timer-elem"></div>
+                    <div class="mb-3">
+                        <button class="btn btn-warning" onclick="cancelLastAction()">Annuler derniere
+                            action</button>
+                    </div>
+                    <div class="mb-3">
+                        <button class="btn btn-warning" onclick="restart()">Revenir à l'état initial</button>
+                    </div>
+                    <div>
+                        <button class="btn btn-danger" onclick="endGame()">Abandonner</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="./script/moment.js"></script>
+<script src="./script/jeuScript.js"></script>
+
+</html>

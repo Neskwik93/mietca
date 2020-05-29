@@ -1,6 +1,5 @@
 let ttPart = document.getElementsByClassName('part');
 let btnBasculeCont = document.getElementById('btn-bascule-cont');
-let accueil = document.getElementsByClassName('accueil');
 let plateau = document.getElementById('plateau');
 let timerElem = document.getElementById('timer-elem');
 let timerEndElem = document.getElementById('timer-end-elem');
@@ -15,12 +14,12 @@ let ttElement = {
     rdinBoat: document.getElementById('rdInBoat'),
 };
 
-/* let urlBackend = 'http://localhost/'; */
-let urlBackend = 'http://34.78.14.249/';
+let state, ttState, timerBegin, intervalGame, right, valid, win, idUser, lastTime, currentTime;
 
-let state, ttState, timer, timerBegin, intervalGame, right, valid, win, idUser, lastTime, currentTime;
+let urlBackend = 'http://localhost/';
+/* let urlBackend = 'http://34.78.14.249/'; */
 
-function start() {
+function init() {
     initVariable();
     $.post(urlBackend + 'api/v1/users', {}, (data) => {
         if (data.idUser) {
@@ -28,8 +27,6 @@ function start() {
             timerElem.innerHTML = '<strong>00:00</strong>';
             timerBegin = moment(new Date());
             lastTime = timerBegin;
-            dispAccueil();
-            plateau.style.display = 'flex';
             intervalGame = setInterval(() => {
                 currentTime = moment(new Date());
                 let timeString = getTimeString(currentTime, timerBegin);
@@ -45,13 +42,6 @@ function start() {
     });
 }
 
-function dispAccueil(option = 'h') {
-    let value = option === 'd' ? 'block' : 'none';
-    for (let i = 0; i < accueil.length; i++) {
-        accueil[i].style.display = value;
-    }
-}
-
 function getTimeString(time, timeToSoustract) {
     let diffMin = time.diff(timeToSoustract, 'minutes');
     let diffSec = time.diff(timeToSoustract, 'seconds');
@@ -59,9 +49,8 @@ function getTimeString(time, timeToSoustract) {
     return (diffMin < 10 ? '0' + diffMin : diffMin) + ':' + (diffSec % 60 < 10 ? '0' + diffSec % 60 : diffSec % 60)
 }
 
-function endGame(timePass = false) {
+function endGame(timePass = false) { // redirect acceuil
     clearInterval(intervalGame);
-    dispAccueil('d');
     plateau.style.display = 'none';
     let preMessage = '';
     if (timePass) {
@@ -70,6 +59,7 @@ function endGame(timePass = false) {
         preMessage = win ? 'Victoire au bout de ' : 'Abandon au bout de ';
     }
     addCoup(preMessage + '<strong>' + getTimeString(currentTime, timerBegin) + '</strong> : ');
+    window.location.href = 'index.html';
 }
 
 function initVariable() {
@@ -263,4 +253,4 @@ function setCoupValue() {
     return value;
 }
 
-initVariable();
+init();

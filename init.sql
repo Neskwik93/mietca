@@ -101,6 +101,7 @@ ALTER TABLE public.backoffice_tusaispotsais_seq OWNER TO neskwik;
 
 ALTER SEQUENCE public.backoffice_tusaispotsais_seq OWNED BY public.backoffice.tusaispotsais;
 
+INSERT INTO backoffice VALUES(1, 'aigrikOuiii');
 
 --
 -- TOC entry 199 (class 1259 OID 16451)

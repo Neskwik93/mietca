@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
@@ -15,112 +15,184 @@
         <div class="row">
             <div class="col text-center">
                 <div class="card mb-3">
-                    <div class="card-header accueil">
-                        <h4>On va jouer à un jeu !</h4>
-                    </div>
-                    <div class="card-body">
-                        <p class="mb-3 accueil" style="font-size: 20px;">
-                            <strong>
-                                Vous avez 30 minutes pour résoudre ce problème.<br>
-                                Dès que vous cliquerez sur "commencer" le chronomètre débutera.<br>
-                                Vous pouvez abandonner à tout moment.<br>
-                                Vous pouvez annuler une action à tout moment.
-                            </strong>
-                        </p>
-                        <div style="max-width: 80%; margin: auto;">
-                            <p>
-                                Trois missionnaires <strong>(M)</strong> et trois cannibales <strong>(C)</strong> sont
-                                sur une berge.<br>
-                                Ils doivent traverser la rivière et trouvent un bateau.
-                            </p>
-                            <p>
-                                Mais le bateau est si petit qu’il ne peut pas contenir plus de <strong>deux
-                                    personnes.</strong>
-                                Si les missionnaires sur l’une ou l’autre berge sont surpassés en
-                                nombre par les cannibales, ces derniers mangeront les missionnaires.
-                            </p>
-                            <p>
-                                Trouve le moyen le plus simple permettant à <strong>tous les missionnaires et les
-                                    cannibales</strong> de
-                                traverser la rivière en toute sécurité. On considère
-                                que tous les passagers du bateau débarquent avant le prochain voyage et <strong>au moins
-                                    une
-                                    personne doit être dans le bateau pour chaque traversée.</strong>
-                            </p>
-                        </div>
-                        <div class="accueil">
-                            <button class="btn btn-success" onclick="start()">Commencer</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="erreur-elem" class="alert alert-danger text-center" style="display: none;">
-            Vous avez fait une erreur, les cannibales etaient trop nombreux sur une des deux rives.<br>
-            Vous pouvez revenir à l'état initial ou annuler votre dernier coup.
-        </div>
-        <div id="victory-elem" class="alert alert-success text-center" style="display: none;">
-            Vous avez réussi en <span id="timer-end-elem"></span>, <stron>bravo !</stron>
-        </div>
-        <div class="row" id="plateau" style="display: none;">
-            <div class="col-md-7">
-                <div class="card">
-                    <div class="card-header d-flex justify-content-around">
-                        <h4>Rive gauche</h4>
-                        <h4>Rivière</h4>
-                        <h4>Rive droite</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col rive">
-                                <div class="part" id="riveGauche">
-                                    <div id="rgWait" class="row mt-5">
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="riviere" class="col">
-                                <div class="part">
-                                    <div class="row mt-5" style="min-height: 150px;">
-                                        <div class="col" id="content-river">
-                                            <div id="rgInBoat" class="row">
-                                            </div>
-                                            <div id="rdInBoat" class="row">
-                                            </div>
-                                        </div>
-                                        <img id="img-arrow" src="./assets/img/arrow.png">
-                                    </div>
-                                    <div class="row" id="btn-bascule-cont" style="display: none;">
-                                        <div class="col text-center">
-                                            <button class="btn btn-success" onclick="bascule()">Traverser</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col rive">
-                                <div id="riveDroite" class="part">
-                                    <div id="rdWait" class="row mt-5"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card">
                     <div class="card-header">
-                        <h4 class="text-center">Actions</h4>
+                        <h4>Missionnaires et Cannibales</h4>
                     </div>
-                    <div class="card-body text-center">
-                        <div class="mb-3" style="font-size: 30px" id="timer-elem"></div>
-                        <div class="mb-3">
-                            <button class="btn btn-warning" onclick="cancelLastAction()">Annuler derniere
-                                action</button>
+                    <div class="card-body">
+                        <p class="text-center" id="txtAccueil1">
+                            Bonjour et merci pour votre participation à cette expérience.
+                            Tout est anonyme et il n'y a
+                            pas de mauvaises réponses.<br>
+                            Vous pouvez arrêter à tout moment si vous le souhaitez. Cela
+                            durera environ 30 minutes.<br><br>
+                            Pour commencer, nous allons vous demander de répondre à un court questionnaire pour
+                            connaître vos habitudes de jeu.
+                        </p>
+                        <div id="questionnaire" class="w-50 m-auto text-left" style="display: none;">
+                            <div class="form-group">
+                                <label class="col" for="inputAge">Age</label>
+                                <input type="number" class="form-control" id="inputAge">
+                            </div>
+                            <div class="form-group mb-4">
+                                <label class="col">Genre</label>
+                                <div class="col text-left">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="genreRadio" id="rbf"
+                                            value="Femme" checked>
+                                        <label class="form-check-label" for="rbf">
+                                            Femme
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="genreRadio" id="rbh"
+                                            value="Homme">
+                                        <label class="form-check-label" for="rbh">
+                                            Homme
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="genreRadio" id="rba"
+                                            value="Autre">
+                                        <label class="form-check-label" for="rba">
+                                            Autre
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mb-4">
+                                <label class="col" for="inputProffession">Profession</label>
+                                <input type="text" class="form-control" id="inputProffession">
+                            </div>
+                            <div class="form-group mb-4">
+                                <label class="col">Niveau d'étude</label>
+                                <div class="col text-left">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="etudeRadio" id="rbBr"
+                                            value="Brevet" checked>
+                                        <label class="form-check-label" for="rbBr">
+                                            Brevet
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="etudeRadio" id="rbBa"
+                                            value="Baccalauréat">
+                                        <label class="form-check-label" for="rbBa">
+                                            Baccalauréat
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="etudeRadio" id="rbLi"
+                                            value="License">
+                                        <label class="form-check-label" for="rbLi">
+                                            License
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="etudeRadio" id="rbMa"
+                                            value="Master">
+                                        <label class="form-check-label" for="rbMa">
+                                            Master
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="etudeRadio" id="rbBts"
+                                            value="BTS">
+                                        <label class="form-check-label" for="rbBts">
+                                            BTS
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="etudeRadio" id="rbCap"
+                                            value="CAP">
+                                        <label class="form-check-label" for="rbCap">
+                                            CAP
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mb-4">
+                                <label class="col">A quelle fréquence ?</label>
+                                <div class="col text-left">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="freqRadio" id="reJa"
+                                            value="Jamais" checked>
+                                        <label class="form-check-label" for="reJa">
+                                            Jamais
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="freqRadio" id="reOca"
+                                            value="Occasionnellement">
+                                        <label class="form-check-label" for="reOca">
+                                            Occasionnellement (2 à 3 fois par an)
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="freqRadio" id="reTet"
+                                            value="De temps en temps">
+                                        <label class="form-check-label" for="reTet">
+                                            De temps en temps (2 à 3 fois par mois)
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="freqRadio" id="reReg"
+                                            value="Régulièrement">
+                                        <label class="form-check-label" for="reReg">
+                                            Régulièrement (2 à 3 fois par semaine)
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="freqRadio" id="reAllD"
+                                            value="Tous les jours ou presque">
+                                        <label class="form-check-label" for="reAllD">
+                                            Tous les jours ou presque
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mb-4">
+                                <label class="col" for="jp">Avez vous le statut joueur proffessionnel ?</label>
+                                <div class="col text-left">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="joueurProRadio" id="rbOui"
+                                            value="Oui" checked>
+                                        <label class="form-check-label" for="rbOui">
+                                            Oui
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="joueurProRadio" id="rbNon"
+                                            value="Non">
+                                        <label class="form-check-label" for="rbNon">
+                                            Non
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mb-4">
+                                <label class="col" for="inputWhichGame">Pour quel jeu ?</label>
+                                <input type="text" class="form-control" id="inputWhichGame">
+                            </div>
+                            <div class="form-group mb-4">
+                                <label class="col" for="inputWhichStruct">Dans quelle structure ?</label>
+                                <input type="text" class="form-control" id="inputWhichStruct">
+                            </div>
+                            <div class="form-group mb-4">
+                                <label class="col" for="textAreaWhichGames">
+                                    A quel(s) jeu(x) vidéo de stratégie jouez-vous ?
+                                </label>
+                                <textarea class="form-control" id="textAreaWhichGames" rows="3"></textarea>
+                            </div>
+                            <div class="form-group mb-4">
+                                <label class="col" for="textAreaMatos">
+                                    Quels sont vos besoins matériels et immatériels pour
+                                    jouer (n'hesitez pas à détailler votre matériel informatique) ?
+                                </label>
+                                <textarea class="form-control" id="textAreaMatos" rows="3"></textarea>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <button class="btn btn-warning" onclick="restart()">Revenir à l'état initial</button>
-                        </div>
-                        <div>
-                            <button class="btn btn-danger" onclick="endGame()">Abandonner</button>
+                        <div class="mt-2">
+                            <button class="btn btn-success" onclick="suivant()">suivant</button>
                         </div>
                     </div>
                 </div>
@@ -158,7 +230,7 @@
 </body>
 
 <script src="./script/moment.js"></script>
-<script src="./script/script.js"></script>
+<script src="./script/accueilScript.js"></script>
 <script src="./script/boScript.js"></script>
 
 </html>
