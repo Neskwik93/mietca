@@ -11,72 +11,108 @@
 </head>
 
 <body>
-    <div id="erreur-elem" class="alert alert-danger text-center" style="display: none;">
-        Vous avez fait une erreur, les cannibales etaient trop nombreux sur une des deux rives.<br>
-        Vous pouvez revenir à l'état initial ou annuler votre dernier coup.
-    </div>
-    <div id="victory-elem" class="alert alert-success text-center" style="display: none;">
-        Vous avez réussi en <span id="timer-end-elem"></span>, <stron>bravo !</stron>
-    </div>
-    <div class="row" id="plateau">
-        <div class="col-md-7">
-            <div class="card">
-                <div class="card-header d-flex justify-content-around">
-                    <h4>Rive gauche</h4>
-                    <h4>Rivière</h4>
-                    <h4>Rive droite</h4>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col rive">
-                            <div class="part" id="riveGauche">
-                                <div id="rgWait" class="row mt-5">
-                                </div>
-                            </div>
-                        </div>
-                        <div id="riviere" class="col">
-                            <div class="part">
-                                <div class="row mt-5" style="min-height: 150px;">
-                                    <div class="col" id="content-river">
-                                        <div id="rgInBoat" class="row">
-                                        </div>
-                                        <div id="rdInBoat" class="row">
-                                        </div>
-                                    </div>
-                                    <img id="img-arrow" src="./assets/img/arrow.png">
-                                </div>
-                                <div class="row" id="btn-bascule-cont" style="display: none;">
-                                    <div class="col text-center">
-                                        <button class="btn btn-success" onclick="bascule()">Traverser</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col rive">
-                            <div id="riveDroite" class="part">
-                                <div id="rdWait" class="row mt-5"></div>
-                            </div>
+    <div class="conteneur">
+        <div class="row">
+            <div class="col">
+                <div class="card mb-3 text-center">
+                    <div class="card-body">
+                        <div>
+                            <p>
+                                Trois missionnaires <strong>(M)</strong> et trois cannibales <strong>(C)</strong> sont
+                                sur une berge.<br>
+                                Ils doivent traverser la rivière et trouvent un bateau.
+                            </p>
+                            <p>
+                                Mais le bateau est si petit qu’il ne peut pas contenir plus de <strong>deux
+                                    personnes.</strong>
+                                Si les missionnaires sur l’une ou l’autre berge sont surpassés en
+                                nombre par les cannibales, ces derniers mangeront les missionnaires.
+                            </p>
+                            <p>
+                                Trouve le moyen le plus simple permettant à <strong>tous les missionnaires et les
+                                    cannibales</strong> de
+                                traverser la rivière en toute sécurité. On considère
+                                que tous les passagers du bateau débarquent avant le prochain voyage et <strong>au moins
+                                    une
+                                    personne doit être dans le bateau pour chaque traversée.</strong>
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="text-center">Actions</h4>
+        <div id="erreur-elem" class="alert alert-danger text-center" style="display: none;">
+            Vous avez fait une erreur, les cannibales etaient trop nombreux sur une des deux rives.<br>
+            Vous pouvez revenir à l'état initial ou annuler votre dernier coup.
+        </div>
+        <div id="victory-elem" class="alert alert-success text-center" style="display: none;">
+            Vous avez réussi en <span id="timer-end-elem"></span>, <stron>bravo !</stron>
+            <br>Merci pour votre participation !
+        </div>
+        <div id="abandon-elem" class="alert alert-warning text-center" style="display: none;">
+            Vous avez abandonné.
+            <br>Merci pour votre participation !
+        </div>
+        <div class="row" id="plateau">
+            <div class="col-md-7">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-around">
+                        <h4>Rive gauche</h4>
+                        <h4>Rivière</h4>
+                        <h4>Rive droite</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col rive">
+                                <div class="part" id="riveGauche">
+                                    <div id="rgWait" class="row mt-5">
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="riviere" class="col">
+                                <div class="part">
+                                    <div class="row mt-5" style="min-height: 150px;">
+                                        <div class="col" id="content-river">
+                                            <div id="rgInBoat" class="row">
+                                            </div>
+                                            <div id="rdInBoat" class="row">
+                                            </div>
+                                        </div>
+                                        <img id="img-arrow" src="./assets/img/arrow.png">
+                                    </div>
+                                    <div class="row" id="btn-bascule-cont" style="display: none;">
+                                        <div class="col text-center">
+                                            <button class="btn btn-success" onclick="bascule()">Traverser</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col rive">
+                                <div id="riveDroite" class="part">
+                                    <div id="rdWait" class="row mt-5"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-body text-center">
-                    <div class="mb-3" style="font-size: 30px" id="timer-elem"></div>
-                    <div class="mb-3">
-                        <button class="btn btn-warning" onclick="cancelLastAction()">Annuler derniere
-                            action</button>
+            </div>
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="text-center">Actions</h4>
                     </div>
-                    <div class="mb-3">
-                        <button class="btn btn-warning" onclick="restart()">Revenir à l'état initial</button>
-                    </div>
-                    <div>
-                        <button class="btn btn-danger" onclick="endGame()">Abandonner</button>
+                    <div class="card-body text-center">
+                        <div class="mb-3" style="font-size: 30px" id="timer-elem"></div>
+                        <div class="mb-3">
+                            <button class="btn btn-warning" onclick="cancelLastAction()">Annuler derniere
+                                action</button>
+                        </div>
+                        <div class="mb-3">
+                            <button class="btn btn-warning" onclick="restart()">Revenir à l'état initial</button>
+                        </div>
+                        <div>
+                            <button class="btn btn-danger" onclick="abandon()">Abandonner</button>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -1,5 +1,6 @@
 const { pool } = require('../config');
 const { genererCSV } = require('../utils');
+const UserController = require('./usersController');
 const fs = require('fs');
 
 class boController {
@@ -37,9 +38,16 @@ class boController {
         boController.checkPass(passToCheck)
             .then(response => {
                 if (response.valid) {
-                    boController.getAll().then(response => {
-                        genererCSV(response).then(filename => {
-                            if (fs.existsSync(filename)) {
+                    boController.getAll().then(async response => {
+                        let ttUser;
+                        try {
+                            ttUser = await UserController.getAll();
+                        } catch(err) {
+                            res.status(500).json(err);
+                        }
+                        genererCSV(response, ttUser).then((filename) => {
+                            if (fs.existsSync(filename)) { 
+                                res.contentType(filename);
                                 res.download(filename);
                             } else {
                                 res.status(404).json({ error: 'file not found' });

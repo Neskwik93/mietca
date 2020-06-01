@@ -1,3 +1,6 @@
+let urlBackend = 'http://localhost/';
+/* let urlBackend = 'http://34.78.14.249/'; */
+
 let ttPart = document.getElementsByClassName('part');
 let btnBasculeCont = document.getElementById('btn-bascule-cont');
 let plateau = document.getElementById('plateau');
@@ -5,7 +8,10 @@ let timerElem = document.getElementById('timer-elem');
 let timerEndElem = document.getElementById('timer-end-elem');
 let erreurElem = document.getElementById('erreur-elem');
 let victoryElem = document.getElementById('victory-elem');
+let abandonElem = document.getElementById('abandon-elem');
 let imgArrow = document.getElementById('img-arrow');
+
+let firstPlay = true;
 let ttCoupToInsert = [];
 let ttElement = {
     rgwait: document.getElementById('rgWait'),
@@ -14,13 +20,12 @@ let ttElement = {
     rdinBoat: document.getElementById('rdInBoat'),
 };
 
-let state, ttState, timerBegin, intervalGame, right, valid, win, idUser, lastTime, currentTime;
+let state, ttState, timerBegin, intervalGame, right, valid, endReason, idUser, lastTime, currentTime;
 
 function init() {
     initVariable();
-
-    if (data.idUser) {
-        idUser = data.idUser;
+    if (localStorage.getItem('idUser')) {
+        idUser = localStorage.getItem('idUser');
         timerElem.innerHTML = '<strong>00:00</strong>';
         timerBegin = moment(new Date());
         lastTime = timerBegin;
@@ -29,12 +34,13 @@ function init() {
             let timeString = getTimeString(currentTime, timerBegin);
             timerElem.innerHTML = '<strong>' + timeString + '</strong>';
             if (timeString[0] == 3) { //si 30 minute mais en moche
+                endReason = 'timer';
                 endGame(true);
             }
         }, 1000);
         displayeState();
     } else {
-        console.log(data);
+        console.log('erreur: localStorage vide');
     }
 }
 
@@ -45,17 +51,14 @@ function getTimeString(time, timeToSoustract) {
     return (diffMin < 10 ? '0' + diffMin : diffMin) + ':' + (diffSec % 60 < 10 ? '0' + diffSec % 60 : diffSec % 60)
 }
 
-function endGame(timePass = false) { // redirect acceuil
+function endGame(timePass = false) {
     clearInterval(intervalGame);
-    plateau.style.display = 'none';
-    let preMessage = '';
     if (timePass) {
         preMessage += 'Les 30 minutes ont été dépassées ';
     } else {
-        preMessage = win ? 'Victoire au bout de ' : 'Abandon au bout de ';
+        preMessage = endReason === 'win' ? 'Victoire au bout de ' : 'Abandon au bout de ';
     }
     addCoup(preMessage + '<strong>' + getTimeString(currentTime, timerBegin) + '</strong> : ');
-    window.location.href = 'index.html';
 }
 
 function initVariable() {
@@ -64,7 +67,7 @@ function initVariable() {
     timerBegin = null;
     valid = true;
     right = true;
-    win = false;
+    endReason = null;
     imgArrow.style.transform = 'none';
     state = {
         rg: { wait: ['c', 'c', 'c', 'm', 'm', 'm'], inBoat: [] },
@@ -74,7 +77,7 @@ function initVariable() {
 }
 
 function restart() {
-    if (ttState.length > 1 && !win) {
+    if (ttState.length > 1 && !endReason) {
         ttState.splice(1);
         state = JSON.parse(JSON.stringify(ttState[0]));
         addCoup('Remise à zero : ');
@@ -85,13 +88,21 @@ function restart() {
 }
 
 function cancelLastAction() {
-    if (ttState.length > 1 && !win) {
+    if (ttState.length > 1 && !endReason) {
         ttState.pop();
         state = JSON.parse(JSON.stringify(ttState[ttState.length - 1]));
-        addCoup('Annulation dernier coup : ');
         checkValidCoup();
         setArrowDirection();
+        addCoup('Annulation dernier coup : ');
         displayeState();
+    }
+}
+
+function abandon() {
+    if (!endReason) {
+        abandonElem.style.display = 'block';
+        endReason = 'abandon';
+        endGame();
     }
 }
 
@@ -115,7 +126,7 @@ function setPassager(rive, status) {
 }
 
 function changeState(passager, element) {
-    if (valid && !win) {
+    if (valid && !endReason) {
         switch (element) {
             case 'rgwait':
                 if (right) switchPassager('rg', 'wait', 'inBoat', passager);
@@ -212,13 +223,15 @@ function countPassengers() {
 
 function checkWin() {
     if (state.rd.wait.length === 6) {
-        win = true;
+        endReason = 'win';
         victoryElem.style.display = 'block';
         timerEndElem.innerHTML = timerElem.innerHTML;
         clearInterval(intervalGame);
         endGame();
     } else {
-        addCoup();
+        let preMessage = firstPlay ? '(premier coup) ' : '';
+        firstPlay = false;
+        addCoup(preMessage);
     }
 }
 
@@ -231,21 +244,20 @@ function addCoup(preValue = null) {
 
 function setCoupValue() {
     let res = countPassengers();
-    let value = '';
-    if (res.nbMiRg > 0) value += res.nbMiRg + ' missionnaire(s)';
-    if (res.nbCaRg > 0) {
-        if (value) value += ' ';
-        value += res.nbCaRg + ' cannibale(s)';
+    let value = ((res.nbMiRg > 0 && res.nbMiRg < res.nbCaRg) || (res.nbMiRd > 0 && res.nbMiRd < res.nbCaRd)) ? 'Erreur: ' : '';
+    for (let i = 0; i < res.nbMiRg; i++) {
+        value += 'M';
     }
-    if (value) value += ' berge gauche';
-    if (res.nbCaRg > 0 || res.nbMiRg > 0) value += ', ';
-    if (res.nbMiRd > 0) value += res.nbMiRd + ' missionnaire(s)';
-    if (res.nbCaRd > 0) {
-        if (res.nbMiRd > 0) value += ' ';
-        value += res.nbCaRd + ' cannibale(s)';
+    for (let i = 0; i < res.nbCaRg; i++) {
+        value += 'C';
     }
-    if (res.nbCaRd > 0 || res.nbMiRd > 0) value += ' berge droite';
-    // exemple resultat attendu: 3 missionaires 1 cannibale berge gauche, 2 cannibales berge droite
+    value += right ? ' <= ' : ' => ';
+    for (let i = 0; i < res.nbMiRd; i++) {
+        value += 'M';
+    }
+    for (let i = 0; i < res.nbCaRd; i++) {
+        value += 'C';
+    }
     return value;
 }
 

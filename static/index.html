@@ -8,9 +8,6 @@
     <link rel="stylesheet" href="./assets/css/styles.css">
     <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
     <script src="./script/jQuery.js"></script>
-    <script>let urlBackend = 'http://localhost/';
-        /* let urlBackend = 'http://34.78.14.249/'; */
-    </script>
 </head>
 
 <body>
@@ -28,6 +25,10 @@
                             pas de mauvaises réponses.<br>
                             Vous pouvez arrêter à tout moment si vous le souhaitez. Cela
                             durera environ 30 minutes.<br><br>
+                            <strong>
+                                Merci de ne pas rafraichir votre navigateur durant toute la durée de
+                                l'experience.
+                            </strong><br><br>
                             Pour commencer, nous allons vous demander de répondre à un court questionnaire pour
                             connaître vos habitudes de jeu.
                         </p>
@@ -114,7 +115,7 @@
                                 </div>
                             </div>
                             <div class="form-group mb-4">
-                                <label class="col">A quelle fréquence ?</label>
+                                <label class="col">A quelle fréquence jouez vous ?</label>
                                 <div class="col text-left">
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="freqRadio" id="reJa"
@@ -158,25 +159,25 @@
                                 <div class="col text-left">
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="joueurProRadio" id="rbOui"
-                                            value="Oui" checked>
+                                            value="Oui" onchange="switchPro()">
                                         <label class="form-check-label" for="rbOui">
                                             Oui
                                         </label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="joueurProRadio" id="rbNon"
-                                            value="Non">
+                                            value="Non" checked onchange="switchPro()">
                                         <label class="form-check-label" for="rbNon">
                                             Non
                                         </label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group mb-4">
+                            <div class="form-group mb-4 onlyPro" style="display: none;">
                                 <label class="col" for="inputWhichGame">Pour quel jeu ?</label>
                                 <input type="text" class="form-control" id="inputWhichGame">
                             </div>
-                            <div class="form-group mb-4">
+                            <div class="form-group mb-4 onlyPro" style="display: none;">
                                 <label class="col" for="inputWhichStruct">Dans quelle structure ?</label>
                                 <input type="text" class="form-control" id="inputWhichStruct">
                             </div>
@@ -194,7 +195,10 @@
                                 <textarea class="form-control" id="textAreaMatos" rows="3"></textarea>
                             </div>
                         </div>
-                        <div class="mt-2">
+                        <div class="alert alert-danger w-50 m-auto" id="textErreur" style="display: none;">
+                            Tous les champs sont obligatoires.
+                        </div>
+                        <div class="mt-2" id="btnSuivant">
                             <button class="btn btn-success" onclick="suivant()">suivant</button>
                         </div>
                     </div>

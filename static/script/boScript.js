@@ -12,6 +12,7 @@ body.addEventListener('keydown', (event) => {
     if (strToCheck.includes('alyssalabest')) {
         jeuElem.style.display = 'none';
         boElem.style.display = 'block';
+        strToCheck = '';
     }
     if (strToCheck.length > 60) {
         strToCheck = '';
