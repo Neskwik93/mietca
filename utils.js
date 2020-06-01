@@ -24,7 +24,7 @@ module.exports.genererCSV = function (ttCoup, ttUser) {
             str += '\r\n\r\n\r\n\r\n';
         });
         try {
-            fs.writeFileSync('data.csv', str, 'ascii');
+            fs.writeFileSync('data.csv', str, 'utf8');
         } catch (err) {
             reject(err);
         }

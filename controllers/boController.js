@@ -46,8 +46,7 @@ class boController {
                             res.status(500).json(err);
                         }
                         genererCSV(response, ttUser).then((filename) => {
-                            if (fs.existsSync(filename)) { 
-                                res.contentType(filename);
+                            if (fs.existsSync(filename)) {
                                 res.download(filename);
                             } else {
                                 res.status(404).json({ error: 'file not found' });
